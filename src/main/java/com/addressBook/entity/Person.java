@@ -10,13 +10,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "people")
-public class People {
+@Table(name = "person")
+public class Person implements Serializable {
+    static final long serialVersionUID = 123;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incPeople")
-    @SequenceGenerator(name = "incPeople", sequenceName = "incPeople", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incPerson")
+    @SequenceGenerator(name = "incPerson", sequenceName = "incPerson", allocationSize = 1)
     @Id
     @Column(name = "id")
     private int id;
@@ -39,10 +41,10 @@ public class People {
     @JoinColumn(name = "organization")
     private Organization organization;
 
-    public People() {
+    public Person() {
     }
 
-    public People(String surname, String name, String homePhone, String phone, String address, City city, Organization organization) {
+    public Person(String surname, String name, String homePhone, String phone, String address, City city, Organization organization) {
         this.surname = surname;
         this.name = name;
         this.homePhone = homePhone;
@@ -114,7 +116,7 @@ public class People {
 
     @Override
     public String toString() {
-        return "People{" + "id=" + id + ", surname=" + surname + ", name=" + name + ", homePhone=" + homePhone + ", phone=" + phone + ", address=" + address + ", city=" + city + ", organization=" + organization + '}';
+        return "Person{" + "id=" + id + ", surname=" + surname + ", name=" + name + ", homePhone=" + homePhone + ", phone=" + phone + ", address=" + address + ", city=" + city + ", organization=" + organization + '}';
     }
 
 }

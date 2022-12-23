@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "city")
-public class City {
+public class City implements Serializable {
+    static final long serialVersionUID = 123;
  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incCity")
     @SequenceGenerator(name = "incCity", sequenceName = "incCity", allocationSize = 1)
     @Id
