@@ -29,13 +29,20 @@ public class City implements Serializable {
     private String codeRegion;
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private List<People> people;
+    private List<Person> person;
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Organization> organization;
 
     public City() {
     }
+
+    public City(String nameCity, String region, String codeRegion) {
+        this.nameCity = nameCity;
+        this.region = region;
+        this.codeRegion = codeRegion;
+    }
+    
 
     public int getId() {
         return id;
@@ -66,12 +73,12 @@ public class City implements Serializable {
         this.codeRegion = codeRegion;
     }
 
-    public List<People> getPeople() {
-        return people;
+    public List<Person> getPeople() {
+        return person;
     }
 
-    public void setPeople(List<People> people) {
-        this.people = people;
+    public void setPeople(List<Person> person) {
+        this.person = person;
     }
 
     public List<Organization> getOrganization() {
@@ -84,7 +91,7 @@ public class City implements Serializable {
 
     @Override
     public String toString() {
-        return "City{" + "id=" + id + ", nameCity=" + nameCity + ", region=" + region + ", codeRegion=" + codeRegion + ", people=" + people + ", organization=" + organization + '}';
+        return "City{" + "id=" + id + ", nameCity=" + nameCity + ", region=" + region + ", codeRegion=" + codeRegion + ", person=" + person + ", organization=" + organization + '}';
     }
     
 

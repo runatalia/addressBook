@@ -1,17 +1,29 @@
 package com.addressBook.controller;
 
 
-import com.addressBook.service.Service;
+import com.addressBook.entity.Person;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.addressBook.service.ServiceAddressBook;
+import org.springframework.ui.Model;
 
 @RestController
 @RequestMapping("/")
 public class RestControllerAddressBook {
 
     @Autowired
-    private Service Service;
+    private ServiceAddressBook service;
+    
+    
+    @GetMapping("/persons")
+    public String showAllPerson(Model model){
+    List<Person> allPersons = service.showAllPerson();
+  //  model.addAttribute("persons",allPersons);
+    return "showAllPersonsView";
+    }
 //
 //    @GetMapping("/persons")
 //    public List<Employee> showAllEmployees() {

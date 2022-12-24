@@ -30,7 +30,7 @@ public class Organization implements Serializable {
     private String address;
 
     @OneToMany(mappedBy = "organization", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private List<People> people;
+    private List<Person> person;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city")
@@ -38,6 +38,12 @@ public class Organization implements Serializable {
 
     public Organization() {
     }
+
+    public Organization(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+    
 
     public int getId() {
         return id;
@@ -59,12 +65,12 @@ public class Organization implements Serializable {
         this.address = address;
     }
 
-    public List<People> getPeople() {
-        return people;
+    public List<Person> getPeople() {
+        return person;
     }
 
-    public void setPeople(List<People> people) {
-        this.people = people;
+    public void setPeople(List<Person> people) {
+        this.person = people;
     }
 
     public City getCity() {
@@ -77,7 +83,7 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "Organization{" + "id=" + id + ", name=" + name + ", address=" + address + ", people=" + people + ", city=" + city + '}';
+        return "Organization{" + "id=" + id + ", name=" + name + ", address=" + address + ", person=" + person + ", city=" + city + '}';
     }
 
 }
