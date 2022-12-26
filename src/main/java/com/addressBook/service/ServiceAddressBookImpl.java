@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceAddressBookImpl implements ServiceAddressBook {
 
+    @Autowired
     private PersonDAO personDAO;
 
     @Override

@@ -1,22 +1,23 @@
 package com.addressBook.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "city")
 public class City implements Serializable {
+
     static final long serialVersionUID = 123;
- @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incCity")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incCity")
     @SequenceGenerator(name = "incCity", sequenceName = "incCity", allocationSize = 1)
     @Id
     @Column(name = "id")
@@ -42,12 +43,10 @@ public class City implements Serializable {
         this.region = region;
         this.codeRegion = codeRegion;
     }
-    
 
     public int getId() {
         return id;
     }
-
 
     public String getNameCity() {
         return nameCity;
@@ -93,6 +92,5 @@ public class City implements Serializable {
     public String toString() {
         return "City{" + "id=" + id + ", nameCity=" + nameCity + ", region=" + region + ", codeRegion=" + codeRegion + ", person=" + person + ", organization=" + organization + '}';
     }
-    
 
 }
