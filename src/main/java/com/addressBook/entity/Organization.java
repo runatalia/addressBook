@@ -41,14 +41,19 @@ public class Organization implements Serializable {
     public Organization() {
     }
 
-    public Organization(String name, String address) {
+    public Organization(String name, String address,City city) {
         this.name = name;
         this.address = address;
+        this.city = city;
     }
     
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

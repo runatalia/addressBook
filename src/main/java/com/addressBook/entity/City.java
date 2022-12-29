@@ -39,7 +39,7 @@ public class City implements Serializable {
     public City() {
     }
 
-    public City(String nameCity, String region, String codeRegion) {
+    public City(String nameCity, String region, String codeRegion) { 
         this.nameCity = nameCity;
         this.region = region;
         this.codeRegion = codeRegion;
@@ -47,6 +47,9 @@ public class City implements Serializable {
 
     public int getId() {
         return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNameCity() {
@@ -88,6 +91,7 @@ public class City implements Serializable {
     public void setOrganization(List<Organization> organization) {
         this.organization = organization;
     }
+
 
     @Override
     public String toString() {
