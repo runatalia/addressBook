@@ -21,7 +21,7 @@ public class RestControllerAddressBook {
     
     @GetMapping("/persons")
     public String showAllPerson(Model model){
-    List<Person> allPersons = service.showAllPerson();
+      List<Person> allPersons = service.showAllPerson();
     model.addAttribute("persons",allPersons);
     return "showAllPersonsView";
     }

@@ -11,12 +11,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
 
-    static final long serialVersionUID = 123;
+    static final long serialVersionUID = 124;
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incPerson")
     @SequenceGenerator(name = "incPerson", sequenceName = "incPerson", allocationSize = 1)
@@ -27,12 +28,17 @@ public class Person implements Serializable {
     private String surname;
     @Column(name = "name")
     private String name;
-    @Column(name = "homePhone")
-    private String homePhone;
+    @Column(name = "patronymic")
+    private String patronymic;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "address")
-    private String address;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "photo")
+    private String photo;
+    @Column(name = "comments")
+    private String comments;
+    
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city")
@@ -45,15 +51,19 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String surname, String name, String homePhone, String phone, String address, City city, Organization organization) {
+    public Person(String surname, String name, String patronymic, String phone, String email, String photo, 
+            String comments, City city, Organization organization) {
         this.surname = surname;
         this.name = name;
-        this.homePhone = homePhone;
+        this.patronymic = patronymic;
         this.phone = phone;
-        this.address = address;
+        this.email = email;
+        this.photo = photo;
+        this.comments = comments;
         this.city = city;
         this.organization = organization;
     }
+
 
     public int getId() {
         return id;
@@ -79,28 +89,12 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public String getHomePhone() {
-        return homePhone;
-    }
-
-    public void setHomePhone(String homePhone) {
-        this.homePhone = homePhone;
-    }
-
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public City getCity() {
@@ -119,9 +113,82 @@ public class Person implements Serializable {
         this.organization = organization;
     }
 
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
-        return "Person{" + "id=" + id + ", surname=" + surname + ", name=" + name + ", homePhone=" + homePhone + ", phone=" + phone + ", address=" + address + ", city=" + city + ", organization=" + organization + '}';
+        return "Person{" + "id=" + id + ", surname=" + surname + ", name=" + name + ", patronymic=" + patronymic + ", phone=" + phone + ", email=" + email + ", photo=" + photo + ", comment=" + comments + ", city=" + city + ", organization=" + organization + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.surname);
+        hash = 79 * hash + Objects.hashCode(this.patronymic);
+        hash = 79 * hash + Objects.hashCode(this.phone);
+        hash = 79 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if (!Objects.equals(this.surname, other.surname)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.patronymic, other.patronymic)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        return Objects.equals(this.email, other.email);
+    }
+
+   
+
+  
 
 }

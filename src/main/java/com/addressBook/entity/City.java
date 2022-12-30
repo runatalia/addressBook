@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -27,8 +28,6 @@ public class City implements Serializable {
     private String nameCity;
     @Column(name = "region")
     private String region;
-    @Column(name = "cod")
-    private String codeRegion;
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Person> person;
@@ -39,10 +38,9 @@ public class City implements Serializable {
     public City() {
     }
 
-    public City(String nameCity, String region, String codeRegion) { 
+    public City(String nameCity, String region) { 
         this.nameCity = nameCity;
         this.region = region;
-        this.codeRegion = codeRegion;
     }
 
     public int getId() {
@@ -68,14 +66,6 @@ public class City implements Serializable {
         this.region = region;
     }
 
-    public String getCodeRegion() {
-        return codeRegion;
-    }
-
-    public void setCodeRegion(String codeRegion) {
-        this.codeRegion = codeRegion;
-    }
-
     public List<Person> getPeople() {
         return person;
     }
@@ -92,10 +82,36 @@ public class City implements Serializable {
         this.organization = organization;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.nameCity);
+        hash = 19 * hash + Objects.hashCode(this.region);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final City other = (City) obj;
+        if (!Objects.equals(this.nameCity, other.nameCity)) {
+            return false;
+        }
+        return Objects.equals(this.region, other.region);
+    }
+
 
     @Override
     public String toString() {
-        return "City{" + "id=" + id + ", nameCity=" + nameCity + ", region=" + region + ", codeRegion=" + codeRegion + ", person=" + person + ", organization=" + organization + '}';
+        return "City{" + "id=" + id + ", nameCity=" + nameCity + ", region=" + region + ", person=" + person + ", organization=" + organization + '}';
     }
 
 }

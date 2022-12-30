@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -28,6 +29,8 @@ public class Organization implements Serializable {
     private int id;
     @Column(name = "name")
     private String name;
+    @Column(name = "phone")
+    private String phone;
     @Column(name = "address")
     private String address;
 
@@ -41,11 +44,30 @@ public class Organization implements Serializable {
     public Organization() {
     }
 
-    public Organization(String name, String address,City city) {
+    public Organization(String name, String phone, String address,  City city) {
         this.name = name;
+        this.phone = phone;
         this.address = address;
         this.city = city;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Person> getPerson() {
+        return person;
+    }
+
+    public void setPerson(List<Person> person) {
+        this.person = person;
+    }
+
+   
     
 
     public int getId() {
@@ -86,6 +108,36 @@ public class Organization implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.address);
+        hash = 61 * hash + Objects.hashCode(this.city);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Organization other = (Organization) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        return Objects.equals(this.city, other.city);
     }
 
     @Override
