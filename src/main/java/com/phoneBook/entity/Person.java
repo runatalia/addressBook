@@ -1,4 +1,4 @@
-package com.addressBook.entity;
+package com.phoneBook.entity;
 
 import jakarta.persistence.CascadeType;
 import java.io.Serializable;

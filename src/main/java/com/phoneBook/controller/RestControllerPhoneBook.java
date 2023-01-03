@@ -1,46 +1,43 @@
-package com.addressBook.controller;
+package com.phoneBook.controller;
 
-
-
-import com.addressBook.entity.Person;
-import com.addressBook.service.ServiceAddressBook;
+import com.phoneBook.entity.Person;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.phoneBook.service.ServicePhoneBook;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/")
-public class RestControllerAddressBook {
+public class RestControllerPhoneBook {
 
     @Autowired
-    private ServiceAddressBook service;
-    
-    
+    private ServicePhoneBook service;
+
     @GetMapping("/persons")
-    public String showAllPerson(Model model){
-      List<Person> allPersons = service.showAllPerson();
-    model.addAttribute("persons",allPersons);
-    return "showAllPersonsView";
+    public String showAllPerson(Model model) {
+        List<Person> allPersons = service.showAllPerson();
+        int arr[] = new int[allPersons.size()];
+        for(int i=1;i<arr.length;i++){
+        arr[i]=i;}
+        model.addAttribute("persons", allPersons);
+        model.addAttribute("arr",arr);
+        
+        return "showAllPersonsView";
     }
-//
-//    @GetMapping("/persons")
-//    public List<Employee> showAllEmployees() {
-//        List<Employee> allEmployees = employeeService.getAllEmployees();
-//        return allEmployees;
-//    }
-//
-//    @GetMapping("/employees/{id}")
-//    public Employee getEmployee(@PathVariable int id) {
-//        Employee employee = employeeService.getEmployee(id);
-//        if (employee == null) {
-//            System.out.println("There is no employee with " + id + " in database.");
-//        }
-//        return employee;
-//    }
-//
+
+    @GetMapping("/personalDetails/{id}")
+    public String getPerson(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+        Person person = service.getPerson(id);
+        model.addAttribute("person", person);
+        redirectAttributes.addFlashAttribute("person", person);
+        return "redirect:/persons";
+    }
+
 //    @PostMapping("/employees")
 //    public Employee addNewEmployee(@RequestBody Employee employee) {
 //        employeeService.saveEmployee(employee);
@@ -61,6 +58,4 @@ public class RestControllerAddressBook {
 //        }
 //        employeeService.deleteEmployee(id);
 //        return "Employee with ID = " + id + " deleted.";
-    }
-
-
+}

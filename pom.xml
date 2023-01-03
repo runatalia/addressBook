@@ -8,10 +8,10 @@
         <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.adressBook</groupId>
+    <groupId>com.phoneBook</groupId>
     <artifactId>restAPI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>addressBook</name>
+    <name>phoneBook</name>
     
     <description>project for Spring Boot</description>
     <properties>

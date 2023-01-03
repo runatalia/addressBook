@@ -1,8 +1,7 @@
-package com.addressBook.DAO;
+package com.phoneBook.DAO;
 
-import com.addressBook.entity.City;
-import com.addressBook.entity.Organization;
-import com.addressBook.entity.Person;
+
+import com.phoneBook.entity.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -38,5 +37,14 @@ public class PersonDAOImpl implements PersonDAO {
         List<Person> allPerson = entityManager.createQuery("from Person", Person.class).getResultList();
         return allPerson;
     }
+
+    @Transactional
+    @Override
+    public Person getPerson(int id) {
+        Person person = entityManager.find(Person.class, id);
+        return person;
+    }
+ 
+    
 
 }
