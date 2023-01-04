@@ -11,7 +11,7 @@
             }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
+        <style>   /* split the screen in half */
             body {
                 font-family: Arial;
                 color: black;
@@ -39,6 +39,11 @@
             .centered img {
                 width: 150px;
                 border-radius: 50%;
+            }
+        </style>
+        <style>
+            .fig {
+                text-align: center; /* center alignment */
             }
         </style>
     </head>
@@ -72,11 +77,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="row" var="i" step="1" items="${persons}">
+                        <c:forEach var="row"  items="${persons}" varStatus="status">
 
                             <tr>
-                               <th scope="row"> <c:out value="${i}"/></th>
-                                
+                                <th scope="row">${status.getIndex()+1}</th>
+
                                 <td><a  href="personalDetails/${row.id}">${row.city}</a></td>
                                 <td><a  href="personalDetails/${row.id}">${row.surname}</a></td>
                                 <td><a href="personalDetails/${row.id}">${row.name}</a></td>
@@ -95,8 +100,35 @@
         </div>
         <div class="split right">
             <div class="centered">
-                <img src="img_avatar.png" alt="Avatar man">
-                <h2>Имя:  ${person.name}</h2>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12" style="padding: 0;">
+                            <img class="w-100" src="${person.photo}" alt="">
+                            <div class="position-absolute text-center" style="top: 50%; left: 0; right: 0; transform: translateY(-50%);">
+                                Фамилия: ${person.surname}
+                                <br>
+                                Имя: ${person.name}
+                                <br>
+                                Отчество: ${person.patronymic}
+                                <br>
+                                Телефон: ${person.phone}
+                                <br>
+                                Почта: ${person.email}
+                                <br>
+                                Регион: ${person.city.region}
+                                <br>
+                                Город: ${person.city.city}
+                                <br>
+                                Организация: <a  href="organizationDetails/${person.organization.id}">${person.organization.name}</a>
+                                <br>
+                                Комментарий: ${person.comments}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="img_avatar.png" alt="Avatar man" class="img-circle" >
+
+
             </div>
         </div>
     </body>

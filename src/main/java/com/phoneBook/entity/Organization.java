@@ -1,6 +1,5 @@
 package com.phoneBook.entity;
 
-
 import jakarta.persistence.CascadeType;
 import java.io.Serializable;
 import jakarta.persistence.Column;
@@ -16,10 +15,10 @@ import jakarta.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
-
 @Entity
 @Table(name = "organizations")
 public class Organization implements Serializable {
+
     static final long serialVersionUID = 123;
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incOrganizationse")
@@ -37,14 +36,14 @@ public class Organization implements Serializable {
     @OneToMany(mappedBy = "organization", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Person> person;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "city")
     private City city;
 
     public Organization() {
     }
 
-    public Organization(String name, String phone, String address,  City city) {
+    public Organization(String name, String phone, String address, City city) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -66,9 +65,6 @@ public class Organization implements Serializable {
     public void setPerson(List<Person> person) {
         this.person = person;
     }
-
-   
-    
 
     public int getId() {
         return id;

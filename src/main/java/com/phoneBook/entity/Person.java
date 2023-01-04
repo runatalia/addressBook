@@ -40,11 +40,11 @@ public class Person implements Serializable {
     private String comments;
     
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "city")
     private City city;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "organization")
     private Organization organization;
 

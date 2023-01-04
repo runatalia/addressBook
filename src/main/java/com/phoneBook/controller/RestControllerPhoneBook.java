@@ -1,5 +1,7 @@
 package com.phoneBook.controller;
 
+
+import com.phoneBook.entity.Organization;
 import com.phoneBook.entity.Person;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +23,22 @@ public class RestControllerPhoneBook {
     @GetMapping("/persons")
     public String showAllPerson(Model model) {
         List<Person> allPersons = service.showAllPerson();
-        int arr[] = new int[allPersons.size()];
-        for(int i=1;i<arr.length;i++){
-        arr[i]=i;}
         model.addAttribute("persons", allPersons);
-        model.addAttribute("arr",arr);
-        
         return "showAllPersonsView";
     }
 
     @GetMapping("/personalDetails/{id}")
-    public String getPerson(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+    public String getPerson(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Person person = service.getPerson(id);
-        model.addAttribute("person", person);
         redirectAttributes.addFlashAttribute("person", person);
+        return "redirect:/persons";
+    }
+    
+     @GetMapping("/organizationDetails/{id}")
+    public String getOrganization(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        Organization organization = service.getOrganization(id);
+        redirectAttributes.addFlashAttribute("organization", organization);
+        System.out.println(id);
         return "redirect:/persons";
     }
 
