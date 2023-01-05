@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="col-12" style="padding: 0;">
                             <div class="position-absolute text-center" style="top: 50%; left: 0; right: 0; transform: translateY(-50%);">
-                                Фамилия: ${person.surname}
+
                                 <br>
                                 Имя: ${person.name}
                                 <br>
@@ -119,9 +119,9 @@
                                 <br>
                                 Комментарий: ${person.comments}
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div> 
+            </div> 
     </body>
 </html>

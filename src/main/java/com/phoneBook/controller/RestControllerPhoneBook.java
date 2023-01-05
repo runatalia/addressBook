@@ -20,27 +20,29 @@ public class RestControllerPhoneBook {
     @Autowired
     private ServicePhoneBook service;
 
-    @GetMapping("/persons")
-    public String showAllPerson(Model model) {
+    @GetMapping("persons")
+    public String showAllPersonForAll(Model model) {
         List<Person> allPersons = service.showAllPerson();
         model.addAttribute("persons", allPersons);
         return "showAllPersonsView";
     }
 
-    @GetMapping("/personalDetails/{id}")
+    @GetMapping("personalDetails/{id}")
     public String getPerson(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Person person = service.getPerson(id);
         redirectAttributes.addFlashAttribute("person", person);
         return "redirect:/persons";
     }
     
-     @GetMapping("/organizationDetails/{id}")
+     @GetMapping("organizationDetails/{id}")
     public String getOrganization(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Organization organization = service.getOrganization(id);
         redirectAttributes.addFlashAttribute("organization", organization);
         System.out.println(id);
         return "redirect:/persons";
     }
+    
+   
 
 //    @PostMapping("/employees")
 //    public Employee addNewEmployee(@RequestBody Employee employee) {

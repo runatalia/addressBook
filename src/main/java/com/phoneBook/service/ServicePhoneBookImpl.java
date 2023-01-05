@@ -1,7 +1,9 @@
 package com.phoneBook.service;
 
+import com.phoneBook.DAO.CityDAO;
 import com.phoneBook.DAO.OrganizationDAO;
 import com.phoneBook.DAO.PersonDAO;
+import com.phoneBook.entity.City;
 import com.phoneBook.entity.Organization;
 import com.phoneBook.entity.Person;
 import java.util.List;
@@ -15,6 +17,8 @@ public class ServicePhoneBookImpl implements ServicePhoneBook {
     private PersonDAO personDAO;
     @Autowired
     private OrganizationDAO organizationDAO;
+    @Autowired
+    private CityDAO cityDAO;
 
     @Override
     public List<Person> showAllPerson() {
@@ -29,6 +33,11 @@ public class ServicePhoneBookImpl implements ServicePhoneBook {
     @Override
     public Organization getOrganization(int id) {
         return organizationDAO.getOrganization(id);
+    }
+
+    @Override
+    public List<City> showAllCity() {
+        return cityDAO.showAllCity();
     }
 
 }

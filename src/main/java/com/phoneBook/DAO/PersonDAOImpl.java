@@ -1,7 +1,7 @@
 package com.phoneBook.DAO;
 
 
-import com.phoneBook.entity.Organization;
+
 import com.phoneBook.entity.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -43,8 +43,6 @@ public class PersonDAOImpl implements PersonDAO {
     @Override
     public Person getPerson(int id) {
         Person person = entityManager.find(Person.class, id);
-        Organization organization = entityManager.createQuery("from Organization  o left join person p where p.id ="+id, 
-                Organization.class).getSingleResult();
         return person;
     }
  
