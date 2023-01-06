@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class RestControllerPhoneBookAdmin {
 
     @Autowired

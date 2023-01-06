@@ -82,12 +82,12 @@
                             <tr>
                                 <th scope="row">${status.getIndex()+1}</th>
 
-                                <td><a  href="personalDetails/${row.id}">${row.city}</a></td>
-                                <td><a  href="personalDetails/${row.id}">${row.surname}</a></td>
-                                <td><a href="personalDetails/${row.id}">${row.name}</a></td>
-                                <td><a href="personalDetails/${row.id}">${row.patronymic}</a></td>
-                                <td><a href="personalDetails/${row.id}">${row.phone}</a></td>
-                                <td><a href="personalDetails/${row.id}">${row.email}</a></td>       
+                                 <td><a  href="api/persons/${row.id}">${row.city}</a></td>
+                                <td><a  href="api/persons/${row.id}">${row.surname}</a></td>
+                                <td><a href="api/persons/${row.id}">${row.name}</a></td>
+                                <td><a href="api/persons/${row.id}">${row.patronymic}</a></td>
+                                <td><a href="api/persons/${row.id}">${row.phone}</a></td>
+                                <td><a href="api/persons/${row.id}">${row.email}</a></td>    
                             </tr>
                         </c:forEach>
 

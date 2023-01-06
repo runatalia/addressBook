@@ -14,7 +14,7 @@ import com.phoneBook.service.ServicePhoneBook;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class RestControllerPhoneBook {
 
     @Autowired
@@ -27,19 +27,19 @@ public class RestControllerPhoneBook {
         return "showAllPersonsView";
     }
 
-    @GetMapping("personalDetails/{id}")
+    @GetMapping("persons/{id}")
     public String getPerson(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Person person = service.getPerson(id);
         redirectAttributes.addFlashAttribute("person", person);
-        return "redirect:/persons";
+        return "redirect:/api/persons";
     }
     
-     @GetMapping("organizationDetails/{id}")
+     @GetMapping("organizations/{id}")
     public String getOrganization(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Organization organization = service.getOrganization(id);
         redirectAttributes.addFlashAttribute("organization", organization);
         System.out.println(id);
-        return "redirect:/persons";
+        return "redirect:/api/persons";
     }
     
    
