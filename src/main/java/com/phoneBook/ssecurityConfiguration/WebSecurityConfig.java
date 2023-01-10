@@ -1,6 +1,5 @@
 
-package com.phoneBook.config;
-
+package com.phoneBook.ssecurityConfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,22 +11,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig  {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("api/persons/").permitAll() 
+				.requestMatchers("/showAllPersonsViewForAdmin").permitAll()
 				.anyRequest().authenticated()
-			)
+			) 
 			.formLogin((form) -> form
 				.loginPage("/login")
 				.permitAll()
 			)
 			.logout((logout) -> logout.permitAll());
+                        //.httpBasic(withDefaults());
 
 		return http.build();
 	}
@@ -42,5 +43,4 @@ public class WebSecurityConfig {
 				.build();
 
 		return new InMemoryUserDetailsManager(user);
-	}
-}
+	}}
