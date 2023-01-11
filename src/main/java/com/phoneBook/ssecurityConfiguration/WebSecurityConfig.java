@@ -20,7 +20,7 @@ public class WebSecurityConfig  {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/showAllPersonsViewForAdmin").permitAll()
+				.requestMatchers("/home").permitAll()
 				.anyRequest().authenticated()
 			) 
 			.formLogin((form) -> form
@@ -28,7 +28,7 @@ public class WebSecurityConfig  {
 				.permitAll()
 			)
 			.logout((logout) -> logout.permitAll());
-                        //.httpBasic(withDefaults());
+                     
 
 		return http.build();
 	}
@@ -37,10 +37,11 @@ public class WebSecurityConfig  {
 	public UserDetailsService userDetailsService() {
 		UserDetails user =
 			 User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("password")
+				.username("u")
+				.password("p")
 				.roles("USER")
 				.build();
 
 		return new InMemoryUserDetailsManager(user);
 	}}
+// <img class="mb-4" src="/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
