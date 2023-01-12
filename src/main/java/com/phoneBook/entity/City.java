@@ -23,7 +23,7 @@ public class City implements Serializable {
     @SequenceGenerator(name = "incCity", sequenceName = "incCity", allocationSize = 1)
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
     @Column(name = "city")
     private String nameCity;
     @Column(name = "region")
@@ -43,10 +43,10 @@ public class City implements Serializable {
         this.region = region;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
