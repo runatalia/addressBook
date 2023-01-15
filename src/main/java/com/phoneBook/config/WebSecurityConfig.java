@@ -29,13 +29,13 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeRequests()
                 //Доступ только для не зарегистрированных пользователей
-                .antMatchers("/registration").not().fullyAuthenticated()
-                //Доступ только для пользователей с ролью Администратор
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/news").hasRole("USER")
-                //Доступ разрешен всем пользователей
-                .antMatchers("/", "/resources/**").permitAll()
-                //Все остальные страницы требуют аутентификации
+//                .antMatchers("/registration").not().fullyAuthenticated()
+//                //Доступ только для пользователей с ролью Администратор
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/news").hasRole("USER")
+//                //Доступ разрешен всем пользователей
+//                .antMatchers("/", "/resources/**").permitAll()
+//                //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
                 //Настройка для входа в систему
@@ -54,10 +54,10 @@ public class WebSecurityConfig {
 
    
     
-        @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
-    }
+//        @Autowired
+//    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+//    }
 }
 
 
