@@ -1,5 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,6 +65,7 @@
 
                     <thead class="thead-dark">
                         <tr>
+
                             <th scope="col">#</th>
                             <th scope="col">Город</th>
                             <th scope="col">Фамилия</th>
@@ -77,19 +76,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="row"  items="${persons}" varStatus="status">
-
-                            <tr>
-                                <th scope="row">${status.getIndex()+1}</th>
-
-                                <td><a  href="/api/persons/${row.id}">${row.city}</a></td>
-                                <td><a  href="/api/persons/${row.id}">${row.surname}</a></td>
-                                <td><a href="/api/persons/${row.id}">${row.name}</a></td>
-                                <td><a href="/api/persons/${row.id}">${row.patronymic}</a></td>
-                                <td><a href="/api/persons/${row.id}">${row.phone}</a></td>
-                                <td><a href="/api/persons/${row.id}">${row.email}</a></td>       
-                            </tr>
-                        </c:forEach>
+                        <tr th:each ="row,iterStat :${persons}" >
+                            <th th:utext="${iterStat.getIndex()+1}"></th>
+                            <td><a  href="/api/persons/${row.id}" th:utext="${row.city}"></a></td>
+                            <td><a  href="/api/persons/${row.id}" th:utext="${row.surname}"></a></td>
+                            <td><a href="/api/persons/${row.id}" th:utext="${row.name}"></a></td>
+                            <td><a href="/api/persons/${row.id}" th:utext="${row.patronymic}"></a></td>
+                            <td><a href="/api/persons/${row.id}" th:utext="${row.phone}"></a></td>
+                            <td><a href="/api/persons/${row.id}" th:utext="${row.email}">${row.email}</a></td>  
+                        </tr>
 
                     </tbody>
                 </table>
@@ -103,7 +98,7 @@
                             <div class="position-absolute text-center" style="top: 50%; left: 0; right: 0; transform: translateY(-50%);">
 
                                 <br>
-                                Имя: ${person.name} 
+                                Имя: <th:utext="${person.name}"> </th:utext>>
                                 <br>
                                 Отчество: ${person.patronymic}
                                 <br>
@@ -123,11 +118,5 @@
                     </div>
                 </div>
             </div> 
-            
-               <jsp:include page="news.jsp" />
-        <p>Main Content 1</p>
-        <p>Main Content 2</p>
-        <p>Main Content 3</p>
-        <jsp:include page="showAllPersonsView.html" />
     </body>
 </html>

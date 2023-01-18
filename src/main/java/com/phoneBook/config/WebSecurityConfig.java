@@ -32,7 +32,7 @@ public class WebSecurityConfig {
      @Bean
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http .csrf().disable().authorizeHttpRequests((requests) -> requests
+        http.csrf().disable().authorizeHttpRequests((requests) -> requests
             .requestMatchers("/**")
             .permitAll()
         )
@@ -65,6 +65,7 @@ public class WebSecurityConfig {
 //        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
 //         
 //    }
+        
 }
 
 
