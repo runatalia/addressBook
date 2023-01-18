@@ -1,6 +1,7 @@
 package com.phoneBook.controller;
 
 
+import com.phoneBook.entity.City;
 import com.phoneBook.entity.Organization;
 import com.phoneBook.entity.Person;
 import java.util.List;
@@ -24,6 +25,11 @@ public class RestControllerPhoneBook {
     public String showAllPersonForAll(Model model) {
         List<Person> allPersons = service.showAllPerson();
         model.addAttribute("persons", allPersons);
+        if(!model.containsAttribute("person")) {  //Thymeleaf пытается обратится к атрибуту "person" не видит его и выводит ошибку 500
+        Person person = new Person();                       //поэтому добавлен дефолтный person со значениями 
+        person.setCity(new City());                         //по умолчанию. В случае,если id есть,то person будет передан из сессии getPerson()
+        person.setOrganization(new Organization());
+        model.addAttribute("person", person);}  
         return "showAllPersonsView";
     }
 
@@ -31,7 +37,8 @@ public class RestControllerPhoneBook {
     public String getPerson(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Person person = service.getPerson(id);
         redirectAttributes.addFlashAttribute("person", person);
-        return "redirect:/api/persons";
+       return "redirect:/api/persons";
+      
     }
     
      @GetMapping("organizations/{id}")
