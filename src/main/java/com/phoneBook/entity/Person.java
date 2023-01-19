@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "person")
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
 
     static final long serialVersionUID = 124;
 
@@ -38,20 +38,19 @@ public class Person implements Serializable {
     private String photo;
     @Column(name = "comments")
     private String comments;
-    
 
-    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "city")
     private City city;
 
-    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "organization")
     private Organization organization;
 
     public Person() {
     }
 
-    public Person(String surname, String name, String patronymic, String phone, String email, String photo, 
+    public Person(String surname, String name, String patronymic, String phone, String email, String photo,
             String comments, City city, Organization organization) {
         this.surname = surname;
         this.name = name;
@@ -63,7 +62,6 @@ public class Person implements Serializable {
         this.city = city;
         this.organization = organization;
     }
-
 
     public long getId() {
         return id;
@@ -187,8 +185,16 @@ public class Person implements Serializable {
         return Objects.equals(this.email, other.email);
     }
 
-   
-
-  
-
+    @Override
+    public int compareTo(Person person) {
+        int compareName = name.compareTo(person.getName());
+        int compareSurname = surname.compareTo(person.getSurname());
+        if (compareName == 0 && compareSurname == 0) {
+            return patronymic.compareTo(person.getPatronymic());
+        } else if (compareName == 0) {
+            return compareSurname;
+        } else {
+            return compareName;
+        }
+    }
 }

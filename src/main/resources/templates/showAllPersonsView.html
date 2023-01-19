@@ -54,61 +54,61 @@
                         </a>
 
                         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto" method ="get" >
-                            <a class="me-3 py-2 text-dark text-decoration-none" href="/api/authorization" >Вход/Авторизация</a>
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="/login" >Вход/Авторизация</a>
                         </nav>
                     </div>
                     <h2>Телефонная книга:</h2>
-                        <div class="split left">
-                           
-                                <table WIDТН=50% class="table table-hover">
+                    <div class="split left">
 
-                                    <thead class="thead-dark">
-                                        <tr>
+                        <table WIDТН=50% class="table table-hover">
 
-                                            <th scope="col">#</th>
-                                            <th scope="col">Город</th>
-                                            <th scope="col">Фамилия</th>
-                                            <th scope="col">Имя</th>
-                                            <th scope="col">Отчество</th>
-                                            <th scope="col">Телефон</th>
-                                            <th scope="col">Почта</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each ="row,iterStat :${persons}" >
-                                            <th th:utext="${iterStat.getIndex()+1}"></th>
-                                            <td><a  href="/api/persons/${row.id}" th:utext="${row.city}"></a></td>
-                                            <td> <a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.surname}"></a></td>
-                                            <td><a href="/api/persons/${row.id}" th:utext="${row.name}"></a></td>
-                                            <td><a href="/api/persons/${row.id}" th:utext="${row.patronymic}"></a></td>
-                                            <td><a href="/api/persons/${row.id}" th:utext="${row.phone}"></a></td>
-                                            <td><a href="/api/persons/${row.id}" th:utext="${row.email}"></a></td>  
-                                        </tr>
+                            <thead class="thead-dark">
+                                <tr>
 
-                                    </tbody>
-                                </table>
-                          
-                        </div>
-                        <div class="split right">
-                            <div class="centered">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12" style="padding: 0;">
-                                            <div class="position-absolute text-left" style="top: 50%; left: 0; right: 0; transform: translateY(-50%);">
-                                                <p th:text="'Имя: '+(${person.name}==null ? '':${person.name})"></p>
-                                                <p th:text="'Фамилия: '+(${person.surname}==null ? '':${person.surname})"></p>
-                                                <p th:text="'Отчество: '+(${person.patronymic}==null ? '':${person.patronymic})"></p>
-                                                <p th:text="'Регион: '+(${person.city.region}==null ? '':${person.city.region})"></p>
-                                                <p th:text="'Город: '+(${person.city.nameCity}==null ? '':${person.city.nameCity})"></p>
-                                                <p th:text="'Организация: '+(${person.organization.name}==null ? '':${person.organization.name})"></p>
-                                                <p th:text="'Телефон: '+(${person.phone}==null ? '':${person.phone})"></p>
-                                                <p th:text="'Почта: '+(${person.email}==null ? '':${person.email})"></p>
-                                                <p th:text="'Комментарий: '+(${person.comments}==null ? '':${person.comments})"> </p>
-                                            </div>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Город</th>
+                                    <th scope="col">Фамилия</th>
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Отчество</th>
+                                    <th scope="col">Телефон</th>
+                                    <th scope="col">Почта</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each ="row,iterStat :${persons}" >
+                                    <th th:utext="${iterStat.getIndex()+1}"></th>
+                                    <td><a  href="/api/persons/${row.id}" th:utext="${row.city}"></a></td>
+                                    <td> <a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.surname}"></a></td>
+                                    <td><a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.name}"></a></td>
+                                    <td><a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.patronymic}"></a></td>
+                                    <td><a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.phone}"></a></td>
+                                    <td><a th:href="@{persons/{id}(id=${row.id})}" th:utext="${row.email}"></a></td>  
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="split right">
+                        <div class="centered">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12" style="padding: 0;">
+                                        <div class="position-absolute text-left" style="top: 40%; left: 0; right: 0; transform: translateY(-50%);">
+                                            <p class="fig"><img th:src="(${person.photo}==null)?(@{/img/directory.jpg}):@{'/img/'+${person.photo}+'.jpg'}" /></p>
+                                            <p th:text="'Имя: '+(${person.name}==null ? '':${person.name})"></p>
+                                            <p th:text="'Фамилия: '+(${person.surname}==null ? '':${person.surname})"></p>
+                                            <p th:text="'Отчество: '+(${person.patronymic}==null ? '':${person.patronymic})"></p>
+                                            <p th:text="'Регион: '+(${person.city.region}==null ? '':${person.city.region})"></p>
+                                            <p th:text="'Город: '+(${person.city.nameCity}==null ? '':${person.city.nameCity})"></p>
+                                            <p th:text="'Организация: '+(${person.organization}==null ? '':${person.organization.name})"></p>
+                                            <p th:text="'Телефон: '+(${person.phone}==null ? '':${person.phone})"></p>
+                                            <p th:text="'Почта: '+(${person.email}==null ? '':${person.email})"></p>
+                                            <p th:text="'Комментарий: '+(${person.comments}==null ? '':${person.comments})"> </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
-                            </body>
-                            </html>
-//Сделать условную в случае, если не созданы объекты города или организация 
+                            </div>
+                        </div> 
+                </body>
+                </html>

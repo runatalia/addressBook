@@ -1,20 +1,24 @@
 package com.phoneBook.config;
 
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.context.annotation.Configuration;
-
-
-
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
+    @Value("${upload.path}")
+    private String upLoadPath;
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/news").setViewName("news");
     }
-    
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+       registry.addResourceHandler("/img/**").addResourceLocations("classpath:/"+upLoadPath+"/").
+               addResourceLocations("classpath:/static/img/");
+    }
 }

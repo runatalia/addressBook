@@ -2,6 +2,8 @@ package com.phoneBook.DAO;
 
 
 
+import com.phoneBook.entity.City;
+import com.phoneBook.entity.Organization;
 import com.phoneBook.entity.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
