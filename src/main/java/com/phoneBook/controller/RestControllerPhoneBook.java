@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -67,7 +68,7 @@ public class RestControllerPhoneBook {
     }
 
     @PostMapping("persons")  // доавление данных - доделать
-    public String addPerson( @PathVariable MultipartFile file) throws IOException{
+    public String addPerson( @RequestBody MultipartFile file) throws IOException{
            if (file != null) {
             File uploadDir = new File(upLoadPath);
             if (!uploadDir.exists()) {
@@ -79,11 +80,11 @@ public class RestControllerPhoneBook {
           //  person.setPhoto(resultFileName);
         } return "здесь будет редирект";
     }
-//    @PostMapping("/employees")
-//    public Employee addNewEmployee(@RequestBody Employee employee) {
-//        employeeService.saveEmployee(employee);
-//        return employee;
-//    }
+    @GetMapping("addPerson")
+    public String addNewEmployee() {
+      //  service.saveEmployee(person);
+        return "addPerson";
+    }
 //
 //    @PutMapping("/employees")
 //    public Employee updateEmployee(@RequestBody Employee employee) {
