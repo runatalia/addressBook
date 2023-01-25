@@ -1,5 +1,7 @@
 package com.phoneBook.controller;
 
+import com.phoneBook.DAO.CityDAO;
+import com.phoneBook.IOData.ExcelReader;
 import com.phoneBook.entity.City;
 import com.phoneBook.entity.Organization;
 import com.phoneBook.entity.Person;
@@ -27,11 +29,16 @@ public class RestControllerPhoneBook {
 
     @Autowired
     private ServicePhoneBook service;
+    
+    @Autowired
+    private CityDAO cityDAO ;
+    
     @Value("${upload.path}")
     private String upLoadPath;
 
     @GetMapping("persons")
     public String showAllPersonForAll(Model model) {
+    cityDAO.databaseEntryFromExcel();        
         List<Person> allPersons = service.showAllPerson();
         Collections.sort(allPersons);
         model.addAttribute("persons", allPersons);
