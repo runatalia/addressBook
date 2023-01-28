@@ -8,6 +8,4 @@ import java.util.List;
 public interface CityDAO {
     public List<City> showAllCity();
     
-    public void databaseEntryFromExcel();
-    
 }

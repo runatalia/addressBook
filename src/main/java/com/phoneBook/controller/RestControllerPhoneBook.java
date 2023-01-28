@@ -16,7 +16,10 @@ import com.phoneBook.service.ServicePhoneBook;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,15 +33,11 @@ public class RestControllerPhoneBook {
     @Autowired
     private ServicePhoneBook service;
     
-    @Autowired
-    private CityDAO cityDAO ;
-    
     @Value("${upload.path}")
     private String upLoadPath;
 
     @GetMapping("persons")
-    public String showAllPersonForAll(Model model) {
-    cityDAO.databaseEntryFromExcel();        
+    public String showAllPersonForAll(Model model) {      
         List<Person> allPersons = service.showAllPerson();
         Collections.sort(allPersons);
         model.addAttribute("persons", allPersons);
@@ -48,6 +47,10 @@ public class RestControllerPhoneBook {
             person.setOrganization(new Organization());
             model.addAttribute("person", person);
         }
+        Map<String,List<City>> mapCity = service.showAllCity().stream().collect(Collectors.groupingBy(x->x.getRegion()));
+        model.addAttribute("mapCityRegion",mapCity.keySet());
+        String hhh = "kkk";
+        model.addAttribute("hhh",hhh);
         return "showAllPersonsView";
     }
 
