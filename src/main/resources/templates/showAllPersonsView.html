@@ -18,8 +18,7 @@
                         </a>
 
                         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto" method ="get" >
-                            <a  class="me-3 py-2 text-dark text-decoration-none" href="#" id="create-user" data-toggle="modal" data-target="#userEditDialog" ><img th:src="@{/img/add.png}" width="20" height="20" &nbsp> Добавить запись</a>                               
-
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="#" id="create-user" data-toggle="modal" data-target="#userEditDialog"><img th:src="@{/img/add.png}" width="20" height="20" &nbsp> Добавить запись</a>                               
                             <a class="me-3 py-2 text-dark text-decoration-none" href="/login" ><img th:src="@{/img/sign.png}" width="20" height="20" &nbsp>Вход/Авторизация</a>
                         </nav>
                     </div>
@@ -72,15 +71,31 @@
                                             <p th:text="'Телефон: '+(${person.phone}==null ? '':${person.phone})"></p>
                                             <p th:text="'Почта: '+(${person.email}==null ? '':${person.email})"></p>
                                             <p th:text="'Комментарий: '+(${person.comments}==null ? '':${person.comments})"> </p>
+                                            <div th:if="${ person.name!=null}">
+
+                                                <!--                                                <form th:action="'/api/persons/add" th:object="${person}"   method="post"> // флома изменения
+                                                                                                    <button type="submit" class="btn btn-outline-dark">Изменить</button>
+                                                                                                    <input type="hidden" th:field="*{id}" />
+                                                                                                </form>
+                                                                                                <br>
+                                                                                                    <form id="create-user" data-toggle="modal" data-target="#userEditDialog"  th:object="${person}"   method="post">
+                                                                                                        <button type="submit" class="btn btn-outline-dark">Изменить</button>
+                                                                                                        <input type="hidden" th:field="*{id}" />
+                                                                                                    </form>-->
+                                                <form th:action="'/api/persons/delete'" th:object="${person}"   method="post">
+                                                    <button type="submit" class="btn btn-outline-dark">Удалить</button>
+                                                    <input type="hidden" th:field="*{id}" />
+                                                </form>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div> 
+                            </div> 
+                        </div>
                     </div>
 
-
-                    <div class="modal fade" id="userEditDialog" tabindex="-1" role="dialog" aria-labelledby="userEditDialogLabel" aria-hidden="true">
+                    <div class="modal fade" id="userEditDialog" tabindex="-1" role="dialog" aria-labelledby="userEditDialogLabel" aria-hidden="true"  >
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -102,7 +117,7 @@
                                                 <form autocomplete="off" action="/action_page.php">
                                                     <label for="city-region" class="col-form-label">Регион</label>
                                                     <div class="autocomplete" style="width:300px;">
-                                                        <input id="myInput" type="text" name="myCountry" placeholder="Регион">
+                                                        <input id="regions" type="text" name="regions" placeholder="Регион">
                                                     </div>
                                                 </form>
 
@@ -113,6 +128,7 @@
                                                     <div class="form-group">
                                                         <label for="person-surname" class="col-form-label">Фамилия</label>
                                                         <input type="text" class="form-control" id="person-surname">
+                                                            <form:errors path="name"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="person-name" class="col-form-label">Имя</label>
@@ -137,7 +153,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="person-photo" class="col-form-label">Добавить фото</label>
+                                                        <label for="person-photo" class="col-form-label">Комментарии</label>
                                                         <input type="img" class="form-control" id="person-photo">
 
                                                     </div>
@@ -179,49 +195,38 @@
                                                     crossorigin="anonymous"></script>
 
                                                     <script>
-                                                        $('#userEditDialog').on('shown.bs.modal', function (event) {
-                                                            let button = $(event.relatedTarget) // Button that triggered the modal
-                                                            let userId = button.data('userid') // Extract info from data-* attributes
-
-                                                            if (userId) {
-                                                                $.get({
-                                                                    url: '/api/v1/user/' + userId,
-                                                                    success: (data) => {
-                                                                        let modal = $(this)
-                                                                        modal.find('#user-id').val(data.id)
-                                                                        modal.find('#user-name').val(data.username)
-                                                                        modal.find('#user-password').val(data.password)
-                                                                    },
-                                                                    error: (err) => {
-                                                                        alert(err);
-                                                                    }
-                                                                });
-                                                            }
-                                                        })
 
                                                         $('#save-user-button').click(function () {
                                                             let modal = $('#userEditDialog')
-                                                            let user = {
-                                                                username: modal.find('#user-name').val(),
-                                                                password: modal.find('#user-password').val(),
+                                                            let person = {
+                                                                city:  modal.find('#city-nameCity').val(),
+                                                                regions: modal.find('#regions').val(),
+                                                                organization: modal.find('#person-organization').val(),
+                                                                surname: modal.find('#person-surname').val(),
+                                                                name: modal.find('#person-name').val(),
+                                                                patronymic: modal.find('#person-patronymic').val(),
+                                                                phone: modal.find('#person-phone').val(),
+                                                                email: modal.find('#person-email').val(),
+                                                                photo: modal.find('#person-photo').val(),
+                                                                comments: modal.find('#person-comments').val()
+
                                                             };
-                                                            if (modal.find('#user-id').val()) {
-                                                                user.id = modal.find('#user-id').val()
+                                                            if (modal.find('#person-id').val()) {
+                                                                user.id = modal.find('#person-id').val()
                                                             }
                                                             $.ajax({
-                                                                url: '/api/v1/user',
+                                                                url: '/api/person',
                                                                 type: 'POST',
-                                                                data: JSON.stringify(user),
+                                                                data: JSON.stringify(person),
                                                                 contentType: "application/json; charset=utf-8",
                                                                 dataType: "json",
-                                                                success: () => {
-                                                                    location.reload()
-                                                                },
-                                                                error: (err) => {
-                                                                    alert(err);
+                                                                success: function (data) {
+                                                                    if (data.status == 'OK')
+                                                                        alert('Person has been added');
+                                                                    else
+                                                                        alert('Failed adding person: ' + data.status + ', ' + data.errorMessage);
                                                                 }
-                                                            })
-
+                                                            });
                                                             modal.modal('hide');
                                                         });
                                                     </script>
@@ -333,8 +338,7 @@
                                                         }
 
                                                         /*An array containing all the country names in the world:*/
-                                                        var regions ='@Model.hhh';
-                                                                /*["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+                                                        var regions = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
                                                         /*initiate the autocomplete function on the "myInput" element, and pass along the regions array as possible autocomplete values:*/
                                                         autocomplete(document.getElementById("myInput"), regions);

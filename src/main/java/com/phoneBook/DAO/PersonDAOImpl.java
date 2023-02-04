@@ -47,6 +47,13 @@ public class PersonDAOImpl implements PersonDAO {
         Person person = entityManager.find(Person.class, id);
         return person;
     }
+
+    @Transactional
+    @Override
+    public void deletePerson(int id) {
+        Person person = entityManager.find(Person.class, id);
+        entityManager.remove(person);
+    }
  
     
 

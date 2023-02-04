@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "person")
@@ -24,14 +26,18 @@ public class Person implements Serializable, Comparable<Person> {
     @Id
     @Column(name = "id")
     private long id;
+    @Size(min = 2, message = "Не меньше 2 знаков")
     @Column(name = "surname")
     private String surname;
+    @Size(min = 2, message = "Не меньше 2 знаков")
     @Column(name = "name")
     private String name;
     @Column(name = "patronymic")
     private String patronymic;
+    @Pattern(regexp="[\\d{11}]", message = "Телефон должен содержать 11 цифр")
     @Column(name = "phone")
     private String phone;
+    @Pattern(regexp="[\\D*@\\D*.\\D*]", message = "Почта должна содержать @ и .")
     @Column(name = "email")
     private String email;
     @Column(name = "photo")

@@ -20,9 +20,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,12 +38,12 @@ public class RestControllerPhoneBook {
 
     @Autowired
     private ServicePhoneBook service;
-    
+
     @Value("${upload.path}")
     private String upLoadPath;
 
     @GetMapping("persons")
-    public String showAllPersonForAll(Model model) {      
+    public String showAllPersonForAll(@Valid @ModelAttribute("person1") Person person1, BindingResult bindingResult, Model model) {
         List<Person> allPersons = service.showAllPerson();
         Collections.sort(allPersons);
         model.addAttribute("persons", allPersons);
@@ -47,10 +53,9 @@ public class RestControllerPhoneBook {
             person.setOrganization(new Organization());
             model.addAttribute("person", person);
         }
-        Map<String,List<City>> mapCity = service.showAllCity().stream().collect(Collectors.groupingBy(x->x.getRegion()));
-        model.addAttribute("mapCityRegion",mapCity.keySet());
-        String hhh = "kkk";
-        model.addAttribute("hhh",hhh);
+        Map<String, List<City>> mapCity = service.showAllCity().stream().collect(Collectors.groupingBy(x -> x.getRegion()));
+        model.addAttribute("mapCityRegion", mapCity.keySet());
+      
         return "showAllPersonsView";
     }
 
@@ -69,32 +74,48 @@ public class RestControllerPhoneBook {
 
     }
 
-    @GetMapping("organizations/{id}")
-    public String getOrganization(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        Organization organization = service.getOrganization(id);
-        redirectAttributes.addFlashAttribute("organization", organization);
-        System.out.println(id);
+//    @GetMapping("organizations/{id}")
+//    public String getOrganization(@PathVariable int id, RedirectAttributes redirectAttributes) {
+//        Organization organization = service.getOrganization(id);
+//        redirectAttributes.addFlashAttribute("organization", organization);
+//        System.out.println(id);
+//        return "redirect:/api/persons";
+//    }
+     @PostMapping(value ="person", headers = {"Content-type=application/json"})  // доавление данных - доделать
+     @ResponseBody
+    public String addPerson(@RequestBody  Person person) {
+        System.out.println(person.toString());
+        
+        
+        return "redirect:/api/persons";
+    }
+//    @PostMapping("persons")  // доавление данных - доделать
+//    public String addPerson(@RequestBody MultipartFile file, Person person) throws IOException {
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+//        if (file != null) {
+//            File uploadDir = new File(upLoadPath);
+//            if (!uploadDir.exists()) {
+//                uploadDir.mkdir();  //в случае,если не существует папки для загрузки файлов,то создать ее
+//            }
+//            String uuidFile = UUID.randomUUID().toString(); //создавать уникальные значения файлам
+//            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+//            file.transferTo(new File(upLoadPath + "/" + resultFileName));
+//            //  person.setPhoto(resultFileName);
+//        }
+//        return "здесь будет редирект";
+//    }
+//    @GetMapping("addPerson")
+//    public String addNewEmployee() {
+//      //  service.saveEmployee(person);
+//        return "addPerson";
+//    }
+
+    @PostMapping("persons/delete")
+    public String deletePerson(@RequestParam Integer id) {
+        service.deletePerson(id);
         return "redirect:/api/persons";
     }
 
-    @PostMapping("persons")  // доавление данных - доделать
-    public String addPerson( @RequestBody MultipartFile file) throws IOException{
-           if (file != null) {
-            File uploadDir = new File(upLoadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();  //в случае,если не существует папки для загрузки файлов,то создать ее
-            }
-            String uuidFile = UUID.randomUUID().toString(); //создавать уникальные значения файлам
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(upLoadPath+"/"+resultFileName));
-          //  person.setPhoto(resultFileName);
-        } return "здесь будет редирект";
-    }
-    @GetMapping("addPerson")
-    public String addNewEmployee() {
-      //  service.saveEmployee(person);
-        return "addPerson";
-    }
 //
 //    @PutMapping("/employees")
 //    public Employee updateEmployee(@RequestBody Employee employee) {
@@ -102,12 +123,4 @@ public class RestControllerPhoneBook {
 //        return employee;
 //    }
 //
-//    @DeleteMapping("/employees/{id}")
-//    public String deleteEmployee(@PathVariable int id) {
-//        Employee employee = employeeService.getEmployee(id);
-//        if (employee == null) {
-//             System.out.println("There is no employee with id " + id);
-//        }
-//        employeeService.deleteEmployee(id);
-//        return "Employee with ID = " + id + " deleted.";
 }

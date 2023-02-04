@@ -12,32 +12,37 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServicePhoneBookImpl implements ServicePhoneBook {
-
+    
     @Autowired
     private PersonDAO personDAO;
     @Autowired
     private OrganizationDAO organizationDAO;
     @Autowired
     private CityDAO cityDAO;
-
+    
     @Override
     public List<Person> showAllPerson() {
         return personDAO.showAllPerson();
     }
-
+    
     @Override
     public Person getPerson(int id) {
         return personDAO.getPerson(id);
     }
-
+    
     @Override
     public Organization getOrganization(int id) {
         return organizationDAO.getOrganization(id);
     }
-
+    
     @Override
     public List<City> showAllCity() {
         return cityDAO.showAllCity();
     }
-
+    
+    @Override
+    public void deletePerson(int id) {
+        personDAO.deletePerson(id);
+    }
+    
 }

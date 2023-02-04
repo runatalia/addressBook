@@ -15,4 +15,6 @@ public interface ServicePhoneBook {
 
     public List<City> showAllCity();
 
+    public void deletePerson(int id);
+
 }

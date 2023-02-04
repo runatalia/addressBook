@@ -8,4 +8,5 @@ public interface PersonDAO{
 
     public List<Person> showAllPerson();
     public Person getPerson(int id);
+    public void deletePerson(int id);
 }
